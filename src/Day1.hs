@@ -123,7 +123,10 @@ calcFuelForMasses masses = sum $ map calcFuelForMass masses
 
 calcFuelForMassAndFuel :: RealFrac a => a -> Int
 calcFuelForMassAndFuel 0 = 0
-calcFuelForMassAndFuel mass = (calcFuelForMass mass) + (calcFuelForMassAndFuel $ fromIntegral $ calcFuelForMass mass)
+calcFuelForMassAndFuel mass = 
+    let baseFuel = calcFuelForMass mass
+        fuelFuel = calcFuelForMassAndFuel (fromIntegral baseFuel)
+    in baseFuel + fuelFuel    
 
 calcFuelForMassesAndFuel :: RealFrac a => [a] -> Int
 calcFuelForMassesAndFuel masses = sum $ map calcFuelForMassAndFuel masses
